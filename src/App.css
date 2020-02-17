@@ -84,6 +84,11 @@ p, a {
   padding: 0px 5px 4px 5px;
 }
 
+.single-poke {
+  width: 400px;
+  margin: 20px auto;
+}
+
 .nav {
   list-style-type: none;
   text-align: center;

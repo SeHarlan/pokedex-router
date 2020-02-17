@@ -15,36 +15,8 @@ import Nav from './Nav.js';
 import Detail from './Detail';
 import Home from './Home';
 
-export const stateStart = {
-  results: [],
-  page: null,
-  perPage: null,
-  totalResults: null
-}
 
 export default class App extends Component {
-
-  state = stateStart
-
-  // async loadPokemon() {
-  //     const pokemonData = await getPokedex();
-
-  //     this.setState({
-  //       results: pokemonData.body.results,
-  //       page: 1,
-  //       perPage: pokemonData.body.perPage,
-  //       totalResults: pokemonData.body.count
-  //     })
-  // }
-
-  // async componentDidMount() {
-  //   await this.loadPokemon();
-    
-
-  //   window.addEventListener('hashchange', async () => {
-  //     await this.loadPokemon();
-  //   })
-  // }
 
   render() {
     return (

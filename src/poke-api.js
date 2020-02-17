@@ -8,7 +8,7 @@ const URL = 'https://alchemy-pokedex.herokuapp.com/api/pokedex';
 export async function getPokedex(search, page) {
 
     const searchString = (search) ? `pokemon=${search}` : '';
-    const pageString = (page) ? `&${page}` : '';
+    const pageString = (page) ? `&page=${page}` : '';
 
     const newUrl = URL + '?' + searchString + pageString;
 

@@ -14,6 +14,8 @@ export default class Detail extends Component {
         }
     }
     render() {
-        return <PokeDetail item={this.state.pokemon} />
+        return <div className="single-poke">
+                <PokeDetail item={this.state.pokemon} />
+            </div>
     }
 }

@@ -3,33 +3,66 @@ import { Link } from 'react-router-dom';
 
 import PokeDetail from './PokeDetail.js';
 import Search from './Search.js';
-// import Paging from './Paging.js'
+import Paging from './Paging.js'
 import { getPokedex } from './poke-api.js';
 
 export default class App extends Component {
     state = {
       search: this.props.match.params.search,
       searchInput: '',
-      pokedex: []
+      pokedex: [],
+      page: 1,
+      perPage: null,
+      totalResults: null
+    }
+ 
+    async updatePage(increment) {
+
+        const currentPage = this.state.page;
+
+        const newPage = currentPage + increment;
+        const newData = await getPokedex(this.state.searchInput, newPage)
+        this.setState({
+          pokedex: newData.body.results,
+          page: newPage,
+          perPage: newData.body.perPage,
+          totalResults: newData.body.count
+        })
     }
 
-    async componentDidMount() {
-        const data = await getPokedex();
-        this.setState({pokedex: data.body.results})
+ 
+    handlePrev = e => {
+      e.preventDefault();
+      this.updatePage(-1)
+    }
+
+    handleNext = e => {
+      e.preventDefault();
+      this.updatePage(1)
     }
 
     handleSubmit = async(e) => {
-        e.preventDefault();
-        //pass in submitted search, pageeee
-        const data = await getPokedex(this.state.searchInput)
-        
-        this.setState({pokedex: data.body.results})
+        e.preventDefault();        
+        const newData = await getPokedex(this.state.searchInput)
+        this.setState({
+          pokedex: newData.body.results, page: 1,
+          perPage: newData.body.perPage,
+          totalResults: newData.body.count
+        })
     }
 
     handleSearchText = e => {
         this.setState({searchInput: e.target.value})
     }
-    
+
+    async componentDidMount() {
+      const data = await getPokedex();
+      this.setState({
+        pokedex: data.body.results,
+        totalResults: data.body.count,
+        perPage: data.body.perPage
+      })
+    }
 
     render() {
       
@@ -43,7 +76,7 @@ export default class App extends Component {
       return <section>
         <Search handleSubmit={this.handleSubmit} handleSearchText={this.handleSearchText} searchInput={this.state.searchInput} />
 
-        {/* <Paging currentPage={stateProps.page} totalResults={stateProps.totalResults} perPage={stateProps.perPage}/> */}
+        <Paging currentPage={this.state.page} totalResults={this.state.totalResults} perPage={this.state.perPage} handleNext={this.handleNext} handlePrev={this.handlePrev} />
 
           <ul className="pokedex">
             {pokeNodes}
