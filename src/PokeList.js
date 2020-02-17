@@ -9,14 +9,25 @@ import { getPokedex } from './poke-api.js';
 export default class App extends Component {
     state = {
       search: this.props.match.params.search,
+      searchInput: '',
       pokedex: []
     }
 
     async componentDidMount() {
         const data = await getPokedex();
         this.setState({pokedex: data.body.results})
-        console.log(data.body.results)
+    }
 
+    handleSubmit = async(e) => {
+        e.preventDefault();
+        //pass in submitted search, pageeee
+        const data = await getPokedex(this.state.searchInput)
+        
+        this.setState({pokedex: data.body.results})
+    }
+
+    handleSearchText = e => {
+        this.setState({searchInput: e.target.value})
     }
     
 
@@ -30,7 +41,7 @@ export default class App extends Component {
               </Link>
               )
       return <section>
-        <Search />
+        <Search handleSubmit={this.handleSubmit} handleSearchText={this.handleSearchText} searchInput={this.state.searchInput} />
 
         {/* <Paging currentPage={stateProps.page} totalResults={stateProps.totalResults} perPage={stateProps.perPage}/> */}
 
