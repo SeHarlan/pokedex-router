@@ -3,9 +3,7 @@ import React, { Component } from 'react';
 
 
 export default class Paging extends Component {
-    
-    
-    
+     
     render() {
         const { currentPage } = this.props;
         const { totalResults } =this.props;
@@ -13,7 +11,7 @@ export default class Paging extends Component {
         const finalPage = Math.ceil(totalResults / perPage);
 
         if(!totalResults) return <p>No found Pokemon :/, try again</p>;
-        
+
         return <div className="paging">
             <button 
                 onClick={this.props.handlePrev}

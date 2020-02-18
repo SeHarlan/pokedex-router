@@ -5,9 +5,9 @@ import request from 'superagent';
 const URL = 'https://alchemy-pokedex.herokuapp.com/api/pokedex';
 
 
-export async function getPokedex(search, page) {
+export async function getPokedex(search, page, option) {
 
-    const searchString = (search) ? `pokemon=${search}` : '';
+    const searchString = (search) ? `${option}=${search.toLowerCase()}` : '';
     const pageString = (page) ? `&page=${page}` : '';
 
     const newUrl = URL + '?' + searchString + pageString;

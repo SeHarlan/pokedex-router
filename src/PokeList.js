@@ -13,7 +13,8 @@ export default class App extends Component {
       pokedex: [],
       page: 1,
       perPage: null,
-      totalResults: null
+      totalResults: null,
+      checkedOption: 'pokemon'
     }
  
     async updatePage(increment) {
@@ -21,7 +22,7 @@ export default class App extends Component {
         const currentPage = this.state.page;
 
         const newPage = currentPage + increment;
-        const newData = await getPokedex(this.state.searchInput, newPage)
+        const newData = await getPokedex(this.state.searchInput, newPage, this.state.checkedOption)
         this.setState({
           pokedex: newData.body.results,
           page: newPage,
@@ -43,7 +44,7 @@ export default class App extends Component {
 
     handleSubmit = async(e) => {
         e.preventDefault();        
-        const newData = await getPokedex(this.state.searchInput)
+        const newData = await getPokedex(this.state.searchInput, this.state.page, this.state.checkedOption)
         this.setState({
           pokedex: newData.body.results, page: 1,
           perPage: newData.body.perPage,
@@ -53,6 +54,10 @@ export default class App extends Component {
 
     handleSearchText = e => {
         this.setState({searchInput: e.target.value})
+    }
+
+    handleOption = e => {
+      this.setState({checkedOption: e.target.value});
     }
 
     async componentDidMount() {
@@ -65,8 +70,7 @@ export default class App extends Component {
     }
 
     render() {
-      
-
+  
         const pokeNodes = this.state.pokedex
             .map(item => 
               <Link to={`/Detail/${item.pokemon}`}>
@@ -74,7 +78,7 @@ export default class App extends Component {
               </Link>
               )
       return <section>
-        <Search handleSubmit={this.handleSubmit} handleSearchText={this.handleSearchText} searchInput={this.state.searchInput} />
+        <Search handleSubmit={this.handleSubmit} handleSearchText={this.handleSearchText} searchInput={this.state.searchInput} handleOption={this.handleOption} />
 
         <Paging currentPage={this.state.page} totalResults={this.state.totalResults} perPage={this.state.perPage} handleNext={this.handleNext} handlePrev={this.handlePrev} />
 
