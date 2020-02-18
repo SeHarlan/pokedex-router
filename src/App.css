@@ -85,7 +85,7 @@ p, a {
 }
 
 .single-poke {
-  width: 400px;
+  width: 300px;
   margin: 20px auto;
 }
 
@@ -102,6 +102,12 @@ p, a {
   width: 80%;
   text-align: center;
   margin: 10px auto;
+}
+.radio {
+  width: 50%;
+  margin: 5px auto;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .paging {

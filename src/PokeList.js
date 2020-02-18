@@ -8,13 +8,19 @@ import { getPokedex } from './poke-api.js';
 
 export default class App extends Component {
     state = {
-      search: this.props.match.params.search,
-      searchInput: '',
+      // searchTerm: this.props.match.params.searchTerm,
+      searchInput: this.getSearchTerm(),
       pokedex: [],
       page: 1,
       perPage: null,
       totalResults: null,
       checkedOption: 'pokemon'
+    }
+
+    getSearchTerm() {
+      const searchTerm = this.props.match.params.searchTerm
+      if(searchTerm) return searchTerm;
+      return '';
     }
  
     async updatePage(increment) {
@@ -46,10 +52,18 @@ export default class App extends Component {
         e.preventDefault();        
         const newData = await getPokedex(this.state.searchInput, this.state.page, this.state.checkedOption)
         this.setState({
-          pokedex: newData.body.results, page: 1,
+          pokedex: newData.body.results, 
+          page: 1,
           perPage: newData.body.perPage,
           totalResults: newData.body.count
         })
+
+        if(this.props.match.params.searchTerm) {
+          this.props.history.replace(this.state.searchInput, 'PokeList')
+        } else {
+          this.props.history.push(`PokeList/${this.state.searchInput}`)
+        }
+        
     }
 
     handleSearchText = e => {
@@ -62,6 +76,7 @@ export default class App extends Component {
 
     async componentDidMount() {
       const data = await getPokedex();
+      
       this.setState({
         pokedex: data.body.results,
         totalResults: data.body.count,

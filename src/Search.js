@@ -14,6 +14,7 @@ export default class Search extends Component {
                 <label><input type="radio" name="search-type" value="pokemon" onClick={this.props.handleOption}></input> Name</label>
                 <label><input type="radio" name="search-type" value="type" onClick={this.props.handleOption}></input>Type</label>
                 <label><input type="radio" name="search-type" value="ability" onClick={this.props.handleOption}></input>Ability</label>
+                <label><input type="radio" name="search-type" value="shape" onClick={this.props.handleOption}></input>Shape</label>
             </div>
         </form>
         

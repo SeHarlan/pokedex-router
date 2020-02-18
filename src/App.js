@@ -25,7 +25,7 @@ export default class App extends Component {
             <Nav />
             <Header />
             <Switch>
-              <Route path='/PokeList' component={PokeList} />
+              <Route path='/PokeList/:searchTerm?' component={PokeList} />
                 
               <Route path='/About' component={About} />
              
